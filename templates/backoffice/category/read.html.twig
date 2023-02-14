@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}
+	-
+	{{ category.name | capitalize }}
+{% endblock %}
+
+{% block body %}
+	<div class="col-12 text-center mb-3">
+		<div>
+			<h1>{{ category.name }}</h1>
+		</div>
+		
+
+	</div>
+	<div class="row text-center">
+
+		<div class="col-12 col-md-6">
+			<p>
+				ID :
+				{{ category.id }}
+				
+			</p>
+			
+				{% for product in products %}
+				<div class="col-12 text-center mb-3">
+					<div>
+						<h1>
+							<a href="{{ path('app_product_read', {id: product.id}) }}">
+								<span class="badge bg-info">{{ product.name }}</span>
+							</a>
+						</h1>
+					</div>
+					
+
+				</div>
+				<div class="row text-center">
+
+					<div class="col-12 col-md-6">
+						<p>
+							ID :
+							{{ product.id }}
+						</p>
+
+						<p>
+							Date :
+							{{ product.createdAt | date('d/m/Y') }}
+						</p>
+						<p>
+							Date :
+							{{ product.price }}
+						</p>
+					
+						<p>
+							Brand :
+							{{ product.brand.name | capitalize }}
+						</p>
+					</div>
+					<div class="col-12 col-md-6">
+
+						<p>
+							Créé le :
+							{{ product.createdAt|date('d/m/Y') }}
+						</p>
+						{% if product.updatedAt %}
+							<p>
+								Dernière mise à jour le :
+								{{ product.updatedAt|date('d/m/Y') }}
+							</p>
+						{% endif %}
+						<p>Status : {{product.status}} </p>
+						
+					</div>
+				</div>
+
+			{% endfor %}
+
+		</div>
+		
+{% endblock %}

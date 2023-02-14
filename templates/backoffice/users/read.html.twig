@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}
+	-
+	{{ user.firstname | capitalize }}
+	{{ user.lastname | capitalize }}
+{% endblock %}
+
+{% block body %}
+	<div class="col-12 text-center mb-3">
+		<div>
+			<h1>
+				{{ user.firstname | capitalize}}
+				{{ user.lastname | capitalize }}</h1>
+		</div>
+
+	</div>
+	<div class="row text-center">
+
+		<div class="col-12 col-md-6">
+			<p>
+				ID :
+				{{ user.id }}
+			</p>
+			<p>
+				Rôles :
+				{{ user.roles ? user.roles|json_encode : ''}}
+			</p>
+			<p>
+				{% if is_granted('USER_TOGGLE_ROLE', app.user)%}
+					<a href="{{ path('backoffice_users_toggle_role_moderator', {id : user.id}) }}" class="btn btn-info" onclick="return confirm('Êtes-vous sûre de vouloir passer cet utilisateur en modérateur ?')" data-bs-toggle="tooltip" data-bs-placement="top">
+						{% if is_granted('ROLE_MODERATOR') %}
+							Enlever rôle modérateur
+						{% else %}
+							Donner rôle modérateur
+						{% endif %}
+					</a>
+				{% endif %}
+			</p>
+		</div>
+		<div class="col-12 col-md-6">
+			<p>
+				Email :
+				<a href="mailto:{{ user.email }}">{{ user.email }}</a>
+			</p>
+
+			{% for user in user.address %}
+				<tr>
+					<p>
+						Adresse de l'utilisateur :</p>
+
+					<p>
+						Phone number :
+						{{ user.number | capitalize }}
+					</p>
+					<p>
+						Zip code :
+						{{ user.zipcode  | capitalize }}
+					</p>
+
+					<p>
+						City :
+						{{user.city}}
+					</p>
+					<p>
+						Country code :
+						{{user.countrycode}}
+					</p>
+
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="4">no records found</td>
+				</tr>
+			{% endfor %}
+
+		</div>
+	</div>
+
+
+{% endblock %}

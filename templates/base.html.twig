@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome to the Eshop backoffice{% endblock %}</title>
+        <link rel="stylesheet" href="https://bootswatch.com/5/darkly/bootstrap.min.css">
+
+        {% block stylesheets %}
+           
+        {% endblock %}
+
+        {% block javascripts %}
+            
+        {% endblock %}
+    </head>
+    <body>
+    {% block nav %}
+    {% include "backoffice/partials/_nav.html.twig" %}
+    {% endblock %}
+        {% block body %}{% endblock %}
+        {% block footer %}
+         {% include 'backoffice/partials/_footer.html.twig' %}
+         {% endblock %}
+    </body>
+</html>

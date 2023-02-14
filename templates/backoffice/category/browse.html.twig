@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}
+	- Categories
+{% endblock %}
+
+{% block body %}
+	<div>
+		<h1 class="text-center">Categories List</h1>
+	</div>
+
+	<div class="container mt-5 mb-3">
+		<div class="row">
+			{% for category in categories %}
+				<div>
+					<a href="{{ path('app_category_read', {id: category.id}) }}">
+						<div class="col-sm-6 col-md-4 col-xl-3 d-flex align-items-stretch">
+							<div class="card p-3 mb-2 bg-light shadow text-primary">
+								<div>
+									<div class="text-center">
+										<h5 class="heading text-center">
+											{{ category.name }}</h5>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</a>
+
+		{% endfor %}
+
+	</div>
+	<div>
+		<h1>
+			<a href="{{ path('app_category_add') }}">
+				<span class="badge bg-info">Add a category</span>
+			</a>
+		</h1>
+	</div>
+
+	<div class="navigation">
+		{{ knp_pagination_render(categories) }}
+	</div>
+</div>{% endblock %}

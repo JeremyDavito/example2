@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}
+	-
+	{{ product.name | capitalize }}
+{% endblock %}
+
+{% block body %}
+	<div class="col-12 text-center mb-3">
+		<div>
+			<h1>{{ product.name }}</h1>
+		</div>
+		
+
+	</div>
+	<div class="row text-center">
+
+		<div class="col-12 col-md-6">
+			<p>
+				ID :
+				{{ product.id }}
+			</p>
+
+			<p>
+				Date :
+				{{ product.createdAt | date('d/m/Y') }}
+			</p>
+			<p>
+				Date :
+				{{ product.price }}
+			</p>
+		
+			<p>
+				Brand :
+				{{ product.brand.name | capitalize }}
+			</p>
+			 <p>
+				Category :
+				 {% for cats in category %}
+					{{ cats.name | capitalize }} 
+				{% endfor %}
+				 
+			</p>  
+		</div>
+		<div class="col-12 col-md-6">
+
+			<p>
+				Créé le :
+				{{ product.createdAt|date('d/m/Y') }}
+			</p>
+			{% if product.updatedAt %}
+				<p>
+					Dernière mise à jour le :
+					{{ product.updatedAt|date('d/m/Y') }}
+				</p>
+			{% endif %}
+			<p>
+				{% if product.status %}
+					Disponible
+				{% else %}
+					Non disponible
+				{% endif %}
+			</p>
+		</div>
+	</div>
+	<a class="btn btn-warning" href="{{ path('app_product_edit', {id : product.id}) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
+		<i class="fa fa-pencil-square-o" aria-hidden="true">EDIT PRODUCT</i>
+	</a>
+	<form action="{{ path('app_product_delete', {id : product.id}) }}" class="d-inline" method="post" onsubmit="return confirm('Êtes-vous sûre de vouloir supprimer cet évènement ?')">
+		<button type="submit" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Supprimer">
+			<i class="fa fa-trash" aria-hidden="true">DELETE PRODUCT</i>
+		</button>
+		<input type="hidden" name="_token" value="{{ csrf_token('delete_product_' ~ product.id) }}">
+		<input type="hidden" name="_method" value="delete">
+	</form>
+
+{% endblock %}
